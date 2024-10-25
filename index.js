@@ -1,5 +1,5 @@
 import { msg } from "./messages/message.js";
 
-export const bimscInterface = {
+export const knackInterface = {
     msg: msg
 }
