@@ -1,2 +1,76 @@
-var knackInterface=function(p){"use strict";const e={msg:{popup:{add:(p,e,s)=>function(p,e,s){var r=$("#"+p),a=$("<div>").addClass("popup-message"),n=$("<div>").html(e).css({marginBottom:"20px",fontSize:"18px",color:"#fff"}),o=$("<div>").addClass("progress-bar-container"),t=$("<div>").attr("id","popup-progress-bar-"+p).addClass("popup-progress-bar"),d=$("<div>").attr("id","progress-text-"+p).addClass("progress-text").text("0%");o.append(t),o.append(d),a.append(n),"progress"===s&&(a.append(o),console.log("progress popup"));var i=$("<div>").addClass("spinner-container"),c=$("<i>").addClass("fa fa-spinner fa-spin spinner").attr("id","popup-spinner-"+p);i.append(c),"spinner"===s&&(a.append(i),console.log("spinner popup")),console.log(a.html()),r.css("position","relative").append(a)}(p,e,s),remove:p=>function(p){$("#"+p+" .popup-message").remove()}(p),update:(p,e)=>function(p,e){$("#popup-progress-bar-"+p).css("width",e+"%"),$("#progress-text-"+p).text(Math.round(e)+"%")}(p,e)}}};return p.knackInterface=e,Object.defineProperty(p,"__esModule",{value:!0}),p}({});
+function removePopup(viewKey) {
+    $('#' + viewKey + ' .popup-message').remove();
+}
+
+function addPopup(viewKey, message, popupType) {
+    var divSelector = $('#' + viewKey);
+
+    // Create the popup container element
+    var popup = $('<div>').addClass('popup-message');
+
+    // Create the message div
+    var messageDiv = $('<div>').html(message).css({
+        marginBottom: '20px',
+        fontSize: '18px',
+        color: '#fff'
+    });
+
+    // Create the progress bar container and bar
+    var progressBarContainer = $('<div>').addClass('progress-bar-container');
+    var progressBar = $('<div>').attr('id', 'popup-progress-bar-' + viewKey).addClass('popup-progress-bar');
+    var progressText = $('<div>').attr('id', 'progress-text-' + viewKey).addClass('progress-text').text('0%');
+
+    progressBarContainer.append(progressBar);
+    progressBarContainer.append(progressText);
+    popup.append(messageDiv);
+    if (popupType === 'progress') {
+        popup.append(progressBarContainer);
+        console.log('progress popup');
+    }
+
+    // Create spinner widget
+    var spinnerContainer = $('<div>').addClass('spinner-container');
+    var spinner = $('<i>').addClass('fa fa-spinner fa-spin spinner').attr('id', 'popup-spinner-' + viewKey);
+    spinnerContainer.append(spinner);
+    if (popupType === 'spinner') {
+        popup.append(spinnerContainer);
+        console.log('spinner popup');
+    }
+
+    console.log(popup.html());
+
+    divSelector.css('position', 'relative').append(popup);
+}
+
+function updatePopupProgress(viewKey, progress) {
+    $('#popup-progress-bar-' + viewKey).css('width', progress + '%');
+    $('#progress-text-' + viewKey).text(Math.round(progress) + '%');
+}
+
+const popup = {
+    add: (viewKey, message, popupType) => addPopup(viewKey, message, popupType),
+    remove: (viewKey) => removePopup(viewKey),
+    update: (viewKey, progress) => updatePopupProgress(viewKey, progress)
+};
+
+// overlay
+
+
+// popup
+
+
+
+
+// progress
+
+const msg = {
+    popup: popup
+};
+
+// construct the message object
+const knackInterface = {
+    msg: msg
+};
+
+export { knackInterface };
 //# sourceMappingURL=bimsc-knack-interface.bundle.js.map

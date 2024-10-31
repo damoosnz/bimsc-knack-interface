@@ -4,16 +4,15 @@ import commonjs from '@rollup/plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
 
 export default {
-    input: 'index.js', // Change this to your entry file
+    input: 'index.js', // Entry file
     output: {
-        file: 'dist/bimsc-knack-interface.bundle.js', // Output file
-        format: 'iife', // Immediately Invoked Function Expression, suitable for browsers
-        name: 'knackInterface', // The name of the global variable for your library
+        file: 'dist/bimsc-knack-interface.bundle.js', // Output file for ES module
+        format: 'es', // ES module format
         sourcemap: true // Generate sourcemaps
     },
     plugins: [
         resolve(), // Allows Rollup to find and bundle third-party dependencies
         commonjs(), // Converts CommonJS modules to ES6 for Rollup
-        terser() // Minifies the bundle
+        // terser() // Minifies the bundle
     ]
 };

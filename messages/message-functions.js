@@ -47,8 +47,10 @@ function updatePopupProgress(viewKey, progress) {
     $('#progress-text-' + viewKey).text(Math.round(progress) + '%');
 }
 
-export const popup = {
+const popup = {
     add: (viewKey, message, popupType) => addPopup(viewKey, message, popupType),
     remove: (viewKey) => removePopup(viewKey),
     update: (viewKey, progress) => updatePopupProgress(viewKey, progress)
 }
+
+export {popup}

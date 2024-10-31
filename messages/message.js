@@ -11,6 +11,8 @@ import { popup } from "./message-functions.js";
 
 // progress
 
-export const msg = {
+const msg = {
     popup: popup
 }
+
+export {msg}
