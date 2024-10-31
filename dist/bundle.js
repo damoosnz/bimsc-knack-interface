@@ -45,9 +45,52 @@ var msg = {
   popup
 };
 
+// views/tables/tables-functions.js
+function addCheckboxes(view) {
+  $("#" + view.key + " .kn-table thead tr").prepend('<th><input type="checkbox"></th>');
+  $("#" + view.key + " .kn-table tbody tr").each(function() {
+    if (!$(this).hasClass("kn-table-group")) {
+      $(this).prepend('<td><input type="checkbox"></td>');
+    } else {
+      $(this).prepend("<td></td>");
+    }
+  });
+}
+function handleHeaderCheckboxChange(view, selectionRules) {
+  selectionRules = selectionRules || (() => true);
+  $("#" + view.key + ' .kn-table thead input[type="checkbox"]').change(function() {
+    var isChecked = $(this).prop("checked");
+    $("#" + view.key + ' .kn-table tbody tr:not(.kn-table-group) input[type="checkbox"]').each(function() {
+      var selectBasedOnRules = selectionRules();
+      $(this).prop("checked", isChecked && selectBasedOnRules);
+    });
+  });
+}
+function getTableCheckedRecords(view) {
+  const checkedRecords = [];
+  $("#" + view.key + ' .kn-table tbody tr:not(.kn-table-group) input[type="checkbox"]').each(function() {
+    var isChecked = $(this).prop("checked");
+    if (isChecked) {
+      var id = $(this).closest("tr").attr("id");
+      checkedRecords.push({ id });
+    }
+  });
+  return checkedRecords;
+}
+
+// views/tables/tables.js
+var tables = {
+  addCheckboxes: (view) => addCheckboxes(view),
+  addHeadEventHandler: (view, rules) => handleHeaderCheckboxChange(view, rules),
+  getChechedRecords: (view) => getTableCheckedRecords(view)
+};
+
 // index.js
 var knackInterface = {
-  msg
+  msg,
+  views: {
+    tables
+  }
 };
 export {
   knackInterface
