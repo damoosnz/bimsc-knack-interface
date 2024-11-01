@@ -46,3 +46,26 @@ export function getTableCheckedRecords(view) {
     return checkedRecords
 
 }
+
+export function addFilterToTableView(view, newFilter) {
+    const filters = Knack.views[view.key].getFilters();
+    let newFilters;
+    if (filters.match) {
+        filters.rules.push(newFilter);
+        newFilters = JSON.parse(JSON.stringify(filters));
+    } else if (filters.length) {
+        filters.push(newFilter);
+        newFilters = {
+            match: 'and',
+            rules: JSON.parse(JSON.stringify(filters))
+        }
+    } else {
+        newFilters = [newFilter];
+    }
+    Knack.views[view.key].handleChangeFilters(JSON.stringify(newFilters));
+}
+
+export function reRenderTableOrCalendar(view) {
+    var originalFilters = JSON.stringify(Knack.views[view.key].getFilters());
+    Knack.views[view.key].handleChangeFilters(originalFilters)
+}
