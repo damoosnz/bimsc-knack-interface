@@ -94,6 +94,9 @@ function addFilterToTableView(view, newFilters) {
   }
   Knack.views[view.key].handleChangeFilters(JSON.stringify(combinedFilters));
 }
+function setFilterToTableView(view, newFilters) {
+  Knack.views[view.key].handleChangeFilters(JSON.stringify(newFilters));
+}
 function reRenderTableOrCalendar(view) {
   var originalFilters = JSON.stringify(Knack.views[view.key].getFilters());
   Knack.views[view.key].handleChangeFilters(originalFilters);

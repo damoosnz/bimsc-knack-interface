@@ -4,6 +4,7 @@ import { handleHeaderCheckboxChange } from "./tables-functions.js";
 import { getTableCheckedRecords } from "./tables-functions.js";
 import { addFilterToTableView } from "./tables-functions.js";
 import { reRenderTableOrCalendar } from "./tables-functions.js";
+import { setFilterToTableView } from "./tables-functions.js";
 
 export const tables = {
     addCheckboxes : (view) => addCheckboxes(view),
