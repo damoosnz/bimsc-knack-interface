@@ -77,12 +77,35 @@ function getTableCheckedRecords(view) {
   });
   return checkedRecords;
 }
+function addFilterToTableView(view, newFilter) {
+  const filters = Knack.views[view.key].getFilters();
+  let newFilters;
+  if (filters.match) {
+    filters.rules.push(newFilter);
+    newFilters = JSON.parse(JSON.stringify(filters));
+  } else if (filters.length) {
+    filters.push(newFilter);
+    newFilters = {
+      match: "and",
+      rules: JSON.parse(JSON.stringify(filters))
+    };
+  } else {
+    newFilters = [newFilter];
+  }
+  Knack.views[view.key].handleChangeFilters(JSON.stringify(newFilters));
+}
+function reRenderTableOrCalendar(view) {
+  var originalFilters = JSON.stringify(Knack.views[view.key].getFilters());
+  Knack.views[view.key].handleChangeFilters(originalFilters);
+}
 
 // views/tables/tables.js
 var tables = {
   addCheckboxes: (view) => addCheckboxes(view),
   addHeadEventHandler: (view, rules) => handleHeaderCheckboxChange(view, rules),
-  getChechedRecords: (view) => getTableCheckedRecords(view)
+  getChechedRecords: (view) => getTableCheckedRecords(view),
+  addFilters: (view, filters) => addFilterToTableView(view, filters),
+  reRender: (view) => reRenderTableOrCalendar(view)
 };
 
 // index.js
