@@ -77,22 +77,22 @@ function getTableCheckedRecords(view) {
   });
   return checkedRecords;
 }
-function addFilterToTableView(view, newFilter) {
+function addFilterToTableView(view, newFilters) {
   const filters = Knack.views[view.key].getFilters();
-  let newFilters;
+  let combinedFilters;
   if (filters.match) {
-    filters.rules.push(newFilter);
-    newFilters = JSON.parse(JSON.stringify(filters));
+    filters.rules.push(newFilters);
+    combinedFilters = JSON.parse(JSON.stringify(filters));
   } else if (filters.length) {
-    filters.push(newFilter);
-    newFilters = {
+    filters.push(newFilters);
+    combinedFilters = {
       match: "and",
       rules: JSON.parse(JSON.stringify(filters))
     };
   } else {
-    newFilters = [newFilter];
+    combinedFilters = [newFilters];
   }
-  Knack.views[view.key].handleChangeFilters(JSON.stringify(newFilters));
+  Knack.views[view.key].handleChangeFilters(JSON.stringify(combinedFilters));
 }
 function reRenderTableOrCalendar(view) {
   var originalFilters = JSON.stringify(Knack.views[view.key].getFilters());
@@ -105,6 +105,7 @@ var tables = {
   addHeadEventHandler: (view, rules) => handleHeaderCheckboxChange(view, rules),
   getChechedRecords: (view) => getTableCheckedRecords(view),
   addFilters: (view, filters) => addFilterToTableView(view, filters),
+  setFilters: (view, filters) => setFilterToTableView(view, filters),
   reRender: (view) => reRenderTableOrCalendar(view)
 };
 

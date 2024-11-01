@@ -10,5 +10,6 @@ export const tables = {
     addHeadEventHandler: (view, rules) => handleHeaderCheckboxChange(view, rules),
     getChechedRecords: (view) => getTableCheckedRecords(view),
     addFilters :(view, filters) => addFilterToTableView(view, filters),
+    setFilters: (view, filters) => setFilterToTableView(view, filters),
     reRender: (view) => reRenderTableOrCalendar(view), 
 }

@@ -47,21 +47,25 @@ export function getTableCheckedRecords(view) {
 
 }
 
-export function addFilterToTableView(view, newFilter) {
+export function addFilterToTableView(view, newFilters) {
     const filters = Knack.views[view.key].getFilters();
-    let newFilters;
+    let combinedFilters;
     if (filters.match) {
-        filters.rules.push(newFilter);
-        newFilters = JSON.parse(JSON.stringify(filters));
+        filters.rules.push(newFilters);
+        combinedFilters = JSON.parse(JSON.stringify(filters));
     } else if (filters.length) {
-        filters.push(newFilter);
-        newFilters = {
+        filters.push(newFilters);
+        combinedFilters = {
             match: 'and',
             rules: JSON.parse(JSON.stringify(filters))
         }
     } else {
-        newFilters = [newFilter];
+        combinedFilters = [newFilters];
     }
+    Knack.views[view.key].handleChangeFilters(JSON.stringify(combinedFilters));
+}
+
+export function setFilterToTableView(view, newFilters) {
     Knack.views[view.key].handleChangeFilters(JSON.stringify(newFilters));
 }
 
